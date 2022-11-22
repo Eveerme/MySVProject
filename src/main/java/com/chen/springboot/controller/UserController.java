@@ -1,23 +1,21 @@
 package com.chen.springboot.controller;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
+import com.chen.springboot.entity.User;
+import com.chen.springboot.service.IUserService;
 import com.chen.springboot.utils.Constants;
 import com.chen.springboot.utils.R;
-import com.chen.springboot.utils.dto.UserDTO;
 import io.swagger.annotations.ApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
-import com.chen.springboot.service.IUserService;
-import com.chen.springboot.entity.User;
-import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -116,14 +114,6 @@ public class UserController {
             return R.error(Constants.CODE_500,"保存失败");
         }
     }
-    @PostMapping("/login")
-    public R login(@RequestBody UserDTO userDTO){
-        String username = userDTO.getUsername();
-        String password = userDTO.getPassword();
-        if (StrUtil.isBlank(username) || StrUtil.isBlank(password)){
-            return R.error(Constants.CODE_600,"用户名或者密码为空!");
-        }
-        return userService.login(userDTO);
-    }
+
 }
 

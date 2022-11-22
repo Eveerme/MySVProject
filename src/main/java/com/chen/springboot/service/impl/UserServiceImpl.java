@@ -1,6 +1,5 @@
 package com.chen.springboot.service.impl;
 
-import cn.hutool.log.Log;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -8,12 +7,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chen.springboot.entity.User;
-import com.chen.springboot.exception.ServiceException;
 import com.chen.springboot.mapper.UserMapper;
 import com.chen.springboot.service.IUserService;
-import com.chen.springboot.utils.Constants;
-import com.chen.springboot.utils.R;
-import com.chen.springboot.utils.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +27,6 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
-
-    private static final Log LOG = Log.get();
 
     @Autowired
     private UserMapper userMapper;
@@ -96,26 +89,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         writer.flush(out,true);
         out.close();
         writer.close();
-    }
-
-    @Override
-    public R login(UserDTO userDTO) {
-        QueryWrapper<User> qw = new QueryWrapper<>();
-        qw.eq("username",userDTO.getUsername());
-        qw.eq("password",userDTO.getPassword());
-        User user;
-        try {
-            user = getOne(qw);
-        }catch (Exception e){
-            LOG.error(e);
-            throw new ServiceException(Constants.CODE_500,"系统查询错误");
-        }
-        if (user==null){
-            throw new ServiceException(Constants.CODE_600,"用户名或者密码错误");
-        }else {
-            return new R(Constants.CODE_200,"登录成功!",user);
-        }
-
     }
 
 }

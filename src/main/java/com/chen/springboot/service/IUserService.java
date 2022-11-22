@@ -3,8 +3,6 @@ package com.chen.springboot.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chen.springboot.entity.User;
-import com.chen.springboot.utils.R;
-import com.chen.springboot.utils.dto.UserDTO;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -26,5 +24,4 @@ public interface IUserService extends IService<User> {
 
     void importXlsxFile(HttpServletResponse response) throws Exception;
 
-    R login(UserDTO userDTO);
 }

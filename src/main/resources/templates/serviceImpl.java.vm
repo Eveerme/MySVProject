@@ -44,13 +44,13 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     }
 
     @Override
-    public IPage<${entity}> get${entity}ByPage(Integer currentPage, Integer pageSize, String ${table.entityPath}name){
+    public IPage<${entity}> get${entity}ByPage(Integer currentPage, Integer pageSize, String ${table.entityPath}Name){
         IPage<${entity}> page = new Page<>(currentPage,pageSize);
-        if (${table.entityPath}name==""){
+        if (${table.entityPath}Name==""){
             return ${table.entityPath}Mapper.selectPage(page,null);
         }
         QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("${table.entityPath}name",${table.entityPath}name);
+        queryWrapper.like("${table.entityPath}Name",${table.entityPath}Name);
         queryWrapper.orderByDesc("id");
         return ${table.entityPath}Mapper.selectPage(page,queryWrapper);
     }

@@ -63,8 +63,8 @@ public class ${table.controllerName} {
     @GetMapping("/page")
     public IPage<${entity}> find${entity}ByPage(@RequestParam("currentPage") Integer currentPage,
                                                @RequestParam("pageSize") Integer pageSize,
-                                               @RequestParam(value = "${table.entityPath}name",defaultValue = "") String ${table.entityPath}name) {
-        return ${table.entityPath}Service.get${entity}ByPage(currentPage,pageSize,${table.entityPath}name);
+                                               @RequestParam(value = "${table.entityPath}Name",defaultValue = "") String ${table.entityPath}Name) {
+        return ${table.entityPath}Service.get${entity}ByPage(currentPage,pageSize,${table.entityPath}Name);
     }
 
 }

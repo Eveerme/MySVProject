@@ -1,13 +1,16 @@
 package com.chen.springboot.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.chen.springboot.entity.Admin;
+import com.chen.springboot.service.IAdminService;
+import com.chen.springboot.utils.Constants;
+import com.chen.springboot.utils.R;
+import com.chen.springboot.utils.dto.AdminDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import javax.annotation.Resource;
-import java.util.List;
 
-import com.chen.springboot.service.IAdminService;
-import com.chen.springboot.entity.Admin;
+import java.util.List;
 
 
 /**
@@ -21,7 +24,7 @@ import com.chen.springboot.entity.Admin;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-    
+
     @Autowired
     private IAdminService adminService;
 
@@ -48,8 +51,18 @@ public class AdminController {
     @GetMapping("/page")
     public IPage<Admin> findAdminByPage(@RequestParam("currentPage") Integer currentPage,
                                                @RequestParam("pageSize") Integer pageSize,
-                                               @RequestParam(value = "adminname",defaultValue = "") String adminname) {
-        return adminService.getAdminByPage(currentPage,pageSize,adminname);
+                                               @RequestParam(value = "adminName",defaultValue = "") String adminName) {
+        return adminService.getAdminByPage(currentPage,pageSize,adminName);
+    }
+
+    @PostMapping("/login")
+    public R login(@RequestBody AdminDTO adminDTO){
+        String adminCount = adminDTO.getAdminCount();
+        String password = adminDTO.getPassword();
+        if (StrUtil.isBlank(adminCount) || StrUtil.isBlank(password)){
+            return R.error(Constants.CODE_600,"用户名或者密码为空!");
+        }
+        return adminService.login(adminDTO);
     }
 
 }

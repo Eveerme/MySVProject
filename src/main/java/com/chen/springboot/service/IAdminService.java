@@ -3,6 +3,8 @@ package com.chen.springboot.service;
 import com.chen.springboot.entity.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.chen.springboot.utils.R;
+import com.chen.springboot.utils.dto.AdminDTO;
 
 /**
  * <p>
@@ -13,7 +15,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
  * @since 2022-11-23
  */
 public interface IAdminService extends IService<Admin> {
+
+    R login(AdminDTO adminDTO);
     public Boolean saveOrUpdateAdmin(Admin admin);
     public Boolean removeAdminById(Integer id);
-    public IPage<Admin> getAdminByPage(Integer currentPage, Integer pageSize, String adminname);
+    public IPage<Admin> getAdminByPage(Integer currentPage, Integer pageSize, String adminCount);
 }

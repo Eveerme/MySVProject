@@ -33,7 +33,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Override
     public R login(AdminDTO adminDTO) {
         QueryWrapper<Admin> qw = new QueryWrapper<>();
-        qw.eq("adminCount", adminDTO.getAdminCount());
+        qw.eq("admin_count", adminDTO.getAdminCount());
         qw.eq("password", adminDTO.getPassword());
         Admin admin;
         try {

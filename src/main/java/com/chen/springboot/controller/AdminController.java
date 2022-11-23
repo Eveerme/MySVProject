@@ -1,7 +1,6 @@
 package com.chen.springboot.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.chen.springboot.entity.Admin;
 import com.chen.springboot.service.IAdminService;
 import com.chen.springboot.utils.Constants;
@@ -9,8 +8,6 @@ import com.chen.springboot.utils.R;
 import com.chen.springboot.utils.dto.AdminDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 /**
@@ -29,30 +26,40 @@ public class AdminController {
     private IAdminService adminService;
 
     @PostMapping("/save")
-    public Boolean saveAdmin(@RequestBody Admin admin) {
-        return adminService.saveOrUpdateAdmin(admin);
+    public R saveAdmin(@RequestBody Admin admin) {
+        if (adminService.saveOrUpdateAdmin(admin)){
+            return new R(Constants.CODE_200,"保存成功!",null);
+        }
+        else {
+            return new R(Constants.CODE_500,"保存失败",null);
+        }
     }
 
     @DeleteMapping("/delete/{id}")
-    public Boolean deleteAdminById(@PathVariable Integer id) {
-        return adminService.removeAdminById(id);
+    public R deleteAdminById(@PathVariable Integer id) {
+        if ( adminService.removeAdminById(id) ){
+            return new R(Constants.CODE_200,"删除成功!",null);
+        }
+        else {
+            return new R(Constants.CODE_500,"删除失败",null);
+        }
     }
 
     @GetMapping
-    public List<Admin> findAllAdmin() {
-        return adminService.list();
+    public R findAllAdmin() {
+        return new R(Constants.CODE_200,"查询成功", adminService.list());
     }
 
     @GetMapping("/{id}")
-    public Admin findOneAdminById(@PathVariable("id") Integer id) {
-        return adminService.getById(id);
+    public R findOneAdminById(@PathVariable("id") Integer id) {
+        return new R(Constants.CODE_200,"查询成功", adminService.getById(id));
     }
 
     @GetMapping("/page")
-    public IPage<Admin> findAdminByPage(@RequestParam("currentPage") Integer currentPage,
+    public R findAdminByPage(@RequestParam("currentPage") Integer currentPage,
                                                @RequestParam("pageSize") Integer pageSize,
                                                @RequestParam(value = "adminName",defaultValue = "") String adminName) {
-        return adminService.getAdminByPage(currentPage,pageSize,adminName);
+        return new R(Constants.CODE_200,"查询成功", adminService.getAdminByPage(currentPage,pageSize,adminName));
     }
 
     @PostMapping("/login")

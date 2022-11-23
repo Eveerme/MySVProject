@@ -16,8 +16,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 interface ${table.serviceName} : ${superServiceClass}<${entity}>
 #else
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
-    public Boolean saveOrUpdate${entity}(${entity} ${table.entityPath});
-    public Boolean remove${entity}ById(Integer id);
-    public IPage<${entity}> get${entity}ByPage(Integer currentPage, Integer pageSize, String ${table.entityPath}Name);
+    Boolean saveOrUpdate${entity}(${entity} ${table.entityPath});
+    Boolean remove${entity}ById(Integer id);
+    IPage<${entity}> get${entity}ByPage(Integer currentPage, Integer pageSize, String ${table.entityPath}Name);
 }
 #end

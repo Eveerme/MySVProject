@@ -28,7 +28,13 @@ public class AdminController {
     @PostMapping("/save")
     public R saveAdmin(@RequestBody Admin admin) {
         if (adminService.saveOrUpdateAdmin(admin)){
-            return new R(Constants.CODE_200,"保存成功!",null);
+            Admin ad;
+            if (admin.getId()==null){
+                ad = null;  //新增不返回管理员信息
+            }else {
+                ad = adminService.getById(admin.getId());
+            }
+            return new R(Constants.CODE_200,"保存成功!",ad);
         }
         else {
             return new R(Constants.CODE_500,"保存失败",null);

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class AdminDTO {
-
+    private Integer id;
     private String adminCount;
     private String password;
     private String adminNickname;

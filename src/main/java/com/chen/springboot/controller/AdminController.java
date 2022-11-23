@@ -72,5 +72,15 @@ public class AdminController {
         return adminService.login(adminDTO);
     }
 
+    @PostMapping("/register")
+    public R register(@RequestBody Admin admin){
+        String adminCount = admin.getAdminCount();
+        String password = admin.getPassword();
+        if (StrUtil.isBlank(adminCount) || StrUtil.isBlank(password)){
+            return R.error(Constants.CODE_600,"账号或者密码为空!");
+        }
+        return adminService.register(admin);
+    }
+
 }
 

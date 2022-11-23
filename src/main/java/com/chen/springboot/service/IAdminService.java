@@ -17,7 +17,9 @@ import com.chen.springboot.utils.dto.AdminDTO;
 public interface IAdminService extends IService<Admin> {
 
     R login(AdminDTO adminDTO);
+    R register(Admin admin);
     Boolean saveOrUpdateAdmin(Admin admin);
     Boolean removeAdminById(Integer id);
     IPage<Admin> getAdminByPage(Integer currentPage, Integer pageSize, String adminCount);
+
 }

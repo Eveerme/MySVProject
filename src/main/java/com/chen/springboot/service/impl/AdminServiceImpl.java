@@ -47,7 +47,25 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         }else {
             return new R(Constants.CODE_200,"登录成功!",admin);
         }
+    }
 
+    @Override
+    public R register(Admin admin) {
+        QueryWrapper<Admin> qw = new QueryWrapper<>();
+        qw.eq("admin_count", admin.getAdminCount());
+        Admin one ;
+        try {
+            one = getOne(qw);
+        }catch (Exception e){
+            LOG.error(e);
+            throw new ServiceException(Constants.CODE_500,"系统查询错误");
+        }
+        if (one==null){
+            save(admin);
+            return new R(Constants.CODE_200,"注册成功",null);
+        }else {
+            return new R(Constants.CODE_600,"已经存在该账号了！",null);
+        }
     }
 
     @Override
@@ -75,4 +93,5 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         queryWrapper.orderByDesc("id");
         return adminMapper.selectPage(page,queryWrapper);
     }
+
 }

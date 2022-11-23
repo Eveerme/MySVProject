@@ -1,5 +1,6 @@
 package com.chen.springboot.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.log.Log;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -11,6 +12,7 @@ import com.chen.springboot.mapper.AdminMapper;
 import com.chen.springboot.service.IAdminService;
 import com.chen.springboot.utils.Constants;
 import com.chen.springboot.utils.R;
+import com.chen.springboot.utils.TokenUtils;
 import com.chen.springboot.utils.dto.AdminDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,17 +37,19 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         QueryWrapper<Admin> qw = new QueryWrapper<>();
         qw.eq("admin_count", adminDTO.getAdminCount());
         qw.eq("password", adminDTO.getPassword());
-        Admin admin;
         try {
-            admin = getOne(qw);
+            Admin a = getOne(qw);
+            BeanUtil.copyProperties(a,adminDTO,true);
+            String token = TokenUtils.getToken(a.getId().toString(), adminDTO.getPassword());
+            adminDTO.setToken(token);
         }catch (Exception e){
             LOG.error(e);
             throw new ServiceException(Constants.CODE_500,"系统查询错误");
         }
-        if (admin==null){
+        if (adminDTO == null){
             throw new ServiceException(Constants.CODE_600,"用户名或者密码错误");
         }else {
-            return new R(Constants.CODE_200,"登录成功!",admin);
+            return new R(Constants.CODE_200,"登录成功!",adminDTO);
         }
     }
 

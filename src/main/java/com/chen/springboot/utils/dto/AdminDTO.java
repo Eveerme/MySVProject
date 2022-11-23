@@ -15,5 +15,8 @@ public class AdminDTO {
 
     private String adminCount;
     private String password;
+    private String adminNickname;
+    private String avatar;
+    private String token;
 
 }
